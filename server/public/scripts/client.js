@@ -1,5 +1,3 @@
-const { response } = require("express");
-
 console.log('js');
 $(onReady);
 
@@ -14,10 +12,10 @@ function setupClickListeners(){
     $('#addTask').on('click', function(){
         console.log('In addTask on click');
         let taskToAdd = {
-            name: $('#taskName').val(),
+            task: $('#taskName').val(),
         };
         //call saveTask with new object
-        saveTask(taskToAdd);
+        saveTasks(taskToAdd);
     });
     $('#viewTasks').on('click', '.delete-task', removeTaskHandler);
     $('#viewTasks').on('click', '.complete-task', completeTaskHandler);
@@ -32,26 +30,27 @@ function getTasks(){
     })
     .then( response => {
         console.log( response );
-        renderTasks();
+        renderTasks(response);
     })
     .catch( error => {
         console.log( 'Error in GET', error);
     })
 }// end getTasks
 
-function renderTasks(tasks){
+function renderTasks(task){
     $('#viewTasks').empty();
-    for (let i=0; i < tasks.length; i++) {
+    for (let i=0; i < task.length; i++) {
         let newRow = $(`
         <tr>
-            <td>${tasks[i].name}</td>
+            <td>${task[i].task}</td>
+            <td>${task[i].complete}</td>
             <td>
-                <button type="button" class="complete-task" data-id="${tasks[i].id}">
+                <button type="button" class="complete-task" data-id="${task[i].id}">
                 Complete
                 </button>
             </td>
             <td>
-                <button type="button" class="delete-task" data-id="${koalas[i].id}"
+                <button type="button" class="delete-task" data-id="${task[i].id}">
                 Delete
                 </button>
             </td>
@@ -72,25 +71,25 @@ function saveTasks(newTask){
     .then( response => {
         console.log('Response from server.', response);
         getTasks();
-        //clear tasks
-        $('#taskName').val('');
     })
     .catch( error => {
         console.log( 'Error', error);
     });
+     //clear tasks
+    $('#taskName').val('');
 }//end saveTasks
 
 function completeTaskHandler(){
-    completeTask( $(this).data("id"));
+    completeTask( $(this).data("id"), "done");
 }// end completeTaskHandler
 
-function completeTask(taskId, isComplete){
+function completeTask(taskId, complete){
     console.log('click');
     $.ajax({
         method: 'PUT',
         url: `/tasks/complete/${taskId}`,
         data: {
-            boolean: isComplete
+            complete: complete
         }
     })
     .then( response => {
@@ -98,7 +97,7 @@ function completeTask(taskId, isComplete){
     })
     .catch( error => {
         console.log(`Error on task mark complete. ${error}`);
-    })
+    });
 }
 
 function removeTaskHandler(){
@@ -106,6 +105,7 @@ function removeTaskHandler(){
 }//end removeTaskHandler
 
 function removeTask(taskId){
+    console.log('Am I deleted?');
     $.ajax({
         method: 'DELETE',
         url: `/tasks/${taskId}`,
@@ -116,5 +116,5 @@ function removeTask(taskId){
     })
     .catch( error => {
         alert(`Error removing task.`, error);
-    })
+    });
 }

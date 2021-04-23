@@ -1,4 +1,4 @@
-const { Router } = require('express');
+const { Router, response } = require('express');
 const express = require('express');
 const router = express.Router();
 const pool = require('../modules/pool');
@@ -6,9 +6,10 @@ const pool = require('../modules/pool');
 
 //GET Route
 router.get('/', (req, res) => {
-    let queryText = 'SELECT * FROM "to_do_list_db" ORDER BY "id";';
+    let queryText = 'SELECT * FROM "weekend_to_do_list" ORDER BY "id";';
     pool.query(queryText)
     .then(result => {
+        //sends back results in an object
         res.send(result.rows);
     })
     .catch(error => {
@@ -21,17 +22,9 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) =>{
     let newTask = req.body;
     console.log('Adding task', newTask);
-    if (newTask.complete === 'true'){
-        newTask.complete = true;
-        console.log( newTask.complete);
-    }
-    if (newTask.complete === 'false'){
-        newTask.complete = false;
-        console.log( newTask.complete);
-    }
-    let queryText = `INSERT INTO "to_do_list_db ("task", "complete")
-                        VALUES ( $1, $2);`;
-    pool.query(queryText, [newTask.task, newTask.complete])
+    let queryText = `INSERT INTO "weekend_to_do_list" ("task")
+                        VALUES ( $1);`;
+    pool.query(queryText, [newTask.task])
         .then(result => {
             res.sendStatus(201);
         })
@@ -44,20 +37,13 @@ router.post('/', (req, res) =>{
 //PUT Route
 router.put('/complete/:id', (req, res) => {
     let taskId = req.params.id;
-    let boolean = req.body.boolean;
-    let sqlText = '';
-    if (boolean === 'true') {
-        sqlText = `UPDATE "to_do_list_db" SET "complete" = true WHERE "id"=$1;`;
-    }
-    else {
-        res.sendStatus(500);
-        return;
-    }
-    pool.query(sqlText, [taskId])
-    .then((resDB) => {
+    let queryText = `UPDATE "weekend_to_do_list" SET "complete" = 'true' WHERE "id"=$1;`;
+    pool.query(queryText, [taskId])
+    .then( response => {
+        console.log('Marked complete');
         res.sendStatus(200);
     })
-    .catch((error) => {
+    .catch(error => {
         console.log('Error with request', error);
         res.sendStatus(500);
     });
@@ -66,8 +52,8 @@ router.put('/complete/:id', (req, res) => {
 //DELETE Route
 router.delete('/:id', (req, res) =>{
     let reqId = req.params.id;
-    console.log('Delete request id', redId);
-    let sqlText = 'DELETE FROM "to_do_list_db" WHERE "id"=$1;';
+    console.log('Delete request id', reqId);
+    let sqlText = 'DELETE FROM "weekend_to_do_list" WHERE "id"=$1;';
     pool.query(sqlText, [reqId])
     .then((result) => {
         console.log('Task deleted');
