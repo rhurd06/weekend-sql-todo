@@ -9,12 +9,30 @@ h1 {
 }
 h2 {
     font-family: cursive;
-    font-size: 30px;
+    font-size: 35px;
 }
 th {
     text-align: left;
-    font-size: 25px;
+    font-size: 30px;
+    font-family:  fantasy;
+}
+.red {
+    background-color: lightcoral;
 }
 tbody {
-    background-color: lightgray;
+    font-size: 20px;
+    font-family: fantasy;
+}
+#taskName {
+    font-size: 20px;
+    font-family: fantasy;
+}
+#addTask {
+    font-size: 20px;
+}
+.delete-task {
+    font-size: 20px;
+}
+.complete-task {
+    font-size: 20px;
 }

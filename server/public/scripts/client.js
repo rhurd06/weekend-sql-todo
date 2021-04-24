@@ -40,7 +40,8 @@ function getTasks(){
 function renderTasks(task){
     $('#viewTasks').empty();
     for (let i=0; i < task.length; i++) {
-        let newRow = $(`
+        if(task[i].complete == false){
+        $('#viewTasks').append(`
         <tr>
             <td>${task[i].task}</td>
             <td>${task[i].complete}</td>
@@ -55,8 +56,24 @@ function renderTasks(task){
                 </button>
             </td>
         </tr>
-        `)
-        $('#viewTasks').append(newRow);
+        `);
+        } else{
+            $('#viewTasks').append(`
+        <tr class="complete-task red">
+            <td>${task[i].task}</td>
+            <td>${task[i].complete}</td>
+            <td><button type="button" class="complete-task" data-id="${task[i].id}">
+            Complete
+            </button>
+            </td>
+            <td>
+                <button type="button" class="delete-task" data-id="${task[i].id}">
+                Delete
+                </button>
+            </td>
+        </tr>
+        `);
+        }
     }
 }
 
@@ -80,17 +97,15 @@ function saveTasks(newTask){
 }//end saveTasks
 
 function completeTaskHandler(){
-    completeTask( $(this).data("id"), "done");
+    completeTask( $(this).data("id"));
 }// end completeTaskHandler
 
-function completeTask(taskId, complete){
+function completeTask(taskId){
     console.log('click');
     $.ajax({
         method: 'PUT',
         url: `/tasks/complete/${taskId}`,
-        data: {
-            complete: complete
-        }
+        data: taskId
     })
     .then( response => {
         getTasks();
