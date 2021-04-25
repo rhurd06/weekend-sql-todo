@@ -59,7 +59,7 @@ function renderTasks(task){
         `);
         } else{
             $('#viewTasks').append(`
-        <tr class="complete-task red">
+        <tr class="complete-task" id="red">
             <td>${task[i].task}</td>
             <td>${task[i].complete}</td>
             <td><button type="button" class="complete-task" data-id="${task[i].id}">
@@ -104,7 +104,7 @@ function completeTask(taskId){
     console.log('click');
     $.ajax({
         method: 'PUT',
-        url: `/tasks/complete/${taskId}`,
+        url: `/tasks/${taskId}`,
         data: taskId
     })
     .then( response => {

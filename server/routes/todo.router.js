@@ -35,7 +35,7 @@ router.post('/', (req, res) =>{
 });
 
 //PUT Route
-router.put('/complete/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     let taskId = req.params.id;
     let queryText = `UPDATE "weekend_to_do_list" SET "complete" = 'true' WHERE "id"=$1;`;
     pool.query(queryText, [taskId])

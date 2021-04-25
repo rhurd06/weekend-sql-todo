@@ -16,7 +16,7 @@ th {
     font-size: 30px;
     font-family:  fantasy;
 }
-#red {
+.red {
     background-color: lightcoral;
 }
 tbody {
