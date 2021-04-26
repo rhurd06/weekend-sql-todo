@@ -9,6 +9,8 @@ app.use('/tasks', todoRouter);
 //Serve back static files by default
 app.use(express.static('server/public'));
 
+
+//Setup port for Heroku- will get the # from the process environment
 //Start listening for requests on a specific PORT
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>{
