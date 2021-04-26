@@ -59,10 +59,10 @@ function renderTasks(task){
         `);
         } else{
             $('#viewTasks').append(`
-        <tr class="complete-task" id="red">
+        <tr class="complete-task-row" id="red">
             <td>${task[i].task}</td>
             <td>${task[i].complete}</td>
-            <td><button type="button" data-id="${task[i].id}">
+            <td><button type="button" class="complete-task" data-id="${task[i].id}">
             Complete
             </button>
             </td>
