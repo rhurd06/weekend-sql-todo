@@ -22,13 +22,27 @@ th {
 tbody {
     font-size: 20px;
     font-family: fantasy;
+    padding: 5rem;
 }
 #taskName {
     font-size: 20px;
     font-family: fantasy;
+    color: black;
+    text-align: center;
+    margin-inline-start: 40%;
+    background-color: lightblue;
+    border: 5px;
+    border-style: groove;
+    border-color: blueviolet;
 }
 #addTask {
-    font-size: 20px;
+    font-size: 25px;
+    font-family: fantasy;
+    color: black;
+    background-color: lightblue;
+    border: 5px;
+    border-style: groove;
+    border-color: blueviolet;
 }
 .delete-task {
     font-size: 20px;
