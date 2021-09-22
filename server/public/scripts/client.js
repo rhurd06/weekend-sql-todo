@@ -44,7 +44,7 @@ function renderTasks(task){
         $('#viewTasks').append(`
         <tr>
             <td>${task[i].task}</td>
-            <td>${task[i].complete}</td>
+            <td class="complete-column">${task[i].complete}</td>
             <td>
                 <button type="button" class="complete-task" data-id="${task[i].id}">
                 Complete
@@ -61,7 +61,7 @@ function renderTasks(task){
             $('#viewTasks').append(`
         <tr class="complete-task-row" id="red">
             <td>${task[i].task}</td>
-            <td>${task[i].complete}</td>
+            <td class="complete-column">${task[i].complete}</td>
             <td><button type="button" class="complete-task" data-id="${task[i].id}">
             Complete
             </button>

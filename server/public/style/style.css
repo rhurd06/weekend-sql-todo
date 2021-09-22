@@ -50,3 +50,6 @@ tbody {
 .complete-task {
     font-size: 20px;
 }
+table tr td.complete-column {
+    text-align: center;
+}
