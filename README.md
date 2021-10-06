@@ -2,6 +2,8 @@
 
 The goal of this assignment is to set up a weekend to do list that can be added to and updated as needed. 
 
+![Image](./wireframes/sqlToDoList.png)
+
 Technologies
 -----------
 * JQuery
